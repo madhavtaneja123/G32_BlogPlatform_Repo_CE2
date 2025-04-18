@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+body{
+    font-family:'Arial',sans-serif;
+
+    background-size:cover;
+    margin:0;
+    padding:0;
+}
+.feedback-container {
+    background:rgba(255,255,255,0.6);
+    padding:30px;
+    border-radius:10px;
+    width:50%;
+    box-shadow:0px 4px 10px rgba(0,0,0,0.1);
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+.form-title{
+    text-align:center;
+    font-size:2rem;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+</style>
+
+<div class="container">
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="feedback-container">
+      <h1 class="form-title">📢Feedback Form</h1>
+
+      <form method="POST" class="d-flex flex-column gap-3">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+          <label class="form-label"><b>First Name:</b></label>
+          <input type="text" class="form-control" name="first_name" required>
+        </div>
+      
+        <div class="mb-3">
+          <label class="form-label"><b>Last Name:</b></label>
+          <input type="text" class="form-control" name="last_name" required>
+        </div>
+      
+        <div class="mb-3">
+          <label class="form-label"><b>Email ID:</b></label>
+          <input type="email" class="form-control" name="email" required>
+        </div>
+      
+        <div class="mb-3">
+          <label class="form-label"><b>Rate Us:</b></label>
+          <select class="form-select" name="rating">
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+          </select>
+        </div>
+      
+        <div class="mb-3">
+          <label class="form-label"><b>Your Feedback:</b></label>
+          <textarea class="form-control" name="feedback_message" rows="4" required></textarea>
+        </div>
+      
+        <a href="{% url 'feedback_thanks' %}" style="text-decoration: none;">
+        <button type="submit" class="btn btn-primary w-100" onclick="return confirm('Are You Sure?');">
+          <b>Submit Feedback</b>
+        </button>
+        </a>
+      </form>
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

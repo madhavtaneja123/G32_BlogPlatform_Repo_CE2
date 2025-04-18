@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f9f9f9;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+
+    .message-card {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border-left: 4px solid #0288d1;
+        transition: transform 0.2s ease;
+    }
+
+    .message-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .message-card strong {
+        color: #00796b;
+        font-weight: bold;
+    }
+
+    .message-card p {
+        font-size: 16px;
+        color: #555;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    .no-messages {
+        text-align: center;
+        font-size: 18px;
+        color: #888;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+            margin: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2>📥 Received Messages</h2>
+    {% for msg in messages %}
+        <div class="message-card">
+            <strong>Name:</strong> {{ msg.name }}<br>
+            <strong>Email:</strong> {{ msg.email }}<br>
+            <strong>Message:</strong>
+            <p>{{ msg.message }}</p>
+            <small>Submitted on {{ msg.submitted_at|date:"F d, Y - h:i A" }}</small>
+        </div>
+    {% empty %}
+        <p class="no-messages">No messages yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

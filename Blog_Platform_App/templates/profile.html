@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .profile-container {
+        background-color: #f4f7fc;
+        font-family: 'Segoe UI', sans-serif;
+        padding: 40px 20px;
+        min-height: 100vh;
+    }
+
+    .profile-card {
+        background: #fff;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-img img {
+        border-radius: 50%;
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border: 5px solid #eaeaea;
+    }
+
+    .default-img {
+        border-radius: 50%;
+        background-color: #e0e0e0;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #6c63ff;
+        font-size: 2rem;
+        font-weight: bold;
+        border: 4px dashed #6c63ff;
+        margin: auto;
+    }
+
+    .profile-info label {
+        font-weight: 700;
+        color: #444;
+    }
+
+    .profile-info p, .profile-info a {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .btn-edit {
+        background-color: #6c63ff;
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.7rem 1.5rem;
+        transition: 0.3s ease;
+        margin-top: 1.5rem;
+    }
+
+    .btn-edit:hover {
+        background-color: #5848f5;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .profile-img img,
+        .default-img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .default-img {
+            font-size: 1.7rem;
+        }
+
+        .btn-edit {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="container profile-container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 profile-card">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <div class="profile-img mb-3">
+                        {% if user.profile.image %}
+                            <img src="{{ user.profile.image.url }}" alt="Profile Image" class="img-fluid">
+                        {% else %}
+                            <div class="default-img">
+                                {{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-8 profile-info">
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">Username:</div>
+                        <div class="col-sm-7"><p>{{ user.username }}</p></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">Full Name:</div>
+                        <div class="col-sm-7"><p>{{ user.get_full_name }}</p></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">Email:</div>
+                        <div class="col-sm-7"><p>{{ user.email }}</p></div>
+                    </div>
+
+                    {% if user.profile.phone_no %}
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">Phone Number:</div>
+                        <div class="col-sm-7"><p>{{ user.profile.phone_no }}</p></div>
+                    </div>
+                    {% endif %}
+
+                    {% if user.profile.bio %}
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">Bio:</div>
+                        <div class="col-sm-7"><p>{{ user.profile.bio }}</p></div>
+                    </div>
+                    {% endif %}
+
+                    {% if user.profile.linkedin %}
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">LinkedIn:</div>
+                        <div class="col-sm-7">
+                            <p><a href="{{ user.profile.linkedin }}" target="_blank">{{ user.profile.linkedin }}</a></p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if user.profile.instagram %}
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">Instagram:</div>
+                        <div class="col-sm-7">
+                            <p><a href="{{ user.profile.instagram }}" target="_blank">{{ user.profile.instagram }}</a></p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if user.profile.facebook %}
+                    <div class="row mb-3">
+                        <div class="col-sm-5 section-title">Facebook:</div>
+                        <div class="col-sm-7">
+                            <p><a href="{{ user.profile.facebook }}" target="_blank">{{ user.profile.facebook }}</a></p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="text-start">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-edit">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

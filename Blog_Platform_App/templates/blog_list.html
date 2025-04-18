@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Blog List</title>
+</head>
+<body>
+    <h1>All Blog Posts</h1>
+    
+    <a href="/create/">Create New Post</a>
+    
+    {% for blog in blogs %}
+        <div style="border:1px solid #ccc; padding:20px; margin:10px;">
+            <h2>{{ blog.title }}</h2>
+            <p>By {{ blog.author_name }}</p>
+            <p>Category: {{ blog.category }}</p>
+            <p>{{ blog.content|truncatewords:30 }}</p>
+            <small>{{ blog.created_at }}</small>
+        </div>
+    {% empty %}
+        <p>No blogs yet. <a href="/create/">Create one?</a></p>
+    {% endfor %}
+</body>
+</html>

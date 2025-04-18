@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center mt-5">
+    <div class="alert alert-success p-5 rounded shadow-sm">
+        <h2 class="mb-3">🎉Thank You!</h2>
+        <p>Your feedback has been submitted successfully.</p>
+        <a href="{% url 'index' %}" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

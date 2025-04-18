@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us</title>
+  <style>
+    *{ margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      line-height:1.6;
+      color:#333;
+      background-color:#f9f9f9;
+    }
+
+    header{
+      background: linear-gradient(135deg,#3498db,#2c3e50);
+      color:white;
+      padding:4rem 2rem;
+      text-align:center;
+    }
+
+    .about-section,.team-section,.cta-section{
+      max-width:1100px;
+      margin:4rem auto;
+      padding:0 2rem;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:2rem;
+    }
+
+    .section-title h2{
+      font-size:2.5rem;
+      color:#2c3e50;
+      position:relative;
+    }
+
+    .section-title h2::after{
+      content:'';width:70px; height:4px;
+      background:#3498db; display:block;
+      margin:0.5rem auto 0;
+    }
+
+    .about-text{
+      text-align:center;
+      margin-bottom:1.5rem;
+      font-size:1.1rem;
+      line-height:1.8;
+    }
+
+    .team-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:2rem;
+      margin-top:2rem;
+      justify-content:center;
+    }
+
+    @media(max-width:768px){
+      .team-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .team-member:hover{
+      transform:translateY(-5px);
+      box-shadow:0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .team-member{
+      background-color:white;
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      overflow:hidden;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      height:100%;
+      padding:0;
+    }
+
+    .member-info{
+      padding:1.5rem;
+      flex-grow:1;
+    }
+
+    .member-name{
+      font-size:1.4rem;
+      color:#2c3e50;
+    }
+
+    .member-bio{
+      margin-top:1rem;
+      font-size:0.95rem;
+      line-height:1.6;
+    }
+
+    .social-links{
+      display:flex;
+      justify-content:center;
+      margin-top:1rem;
+      gap:10px;
+    }
+
+    .social-links a{
+      display:inline-flex;
+      width:32px;
+      height:32px;
+      align-items:center;
+      justify-content:center;
+      background:#e0e0e0;
+      color:#2c3e50;
+      border-radius:50%;
+      text-decoration:none;
+      font-size:0.9rem;
+      transition:0.3s;
+    }
+
+    .social-links a:hover{
+      background:#3498db;
+      color:white;
+    }
+
+    html,body{
+      background-image:url("{% static 'bg.jpg' %}");
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>About BlogBuzz</h1>
+    <p>Empowering expression, one blog at a time!</p>
+  </header>
+
+  <section class="about-section">
+    <div class="section-title"><h2>Our Story</h2></div>
+    <p class="about-text">BloggBuzz began as a dream to bring passionate writers and readers together. Whether you're here to explore thoughts, read about tech or just enjoy creativity — this is your space!</p>
+    <p class="about-text">We aim to provide a platform that values honesty, originality, and learning. Whether you're a casual reader or an aspiring writer, BloggBuzz welcomes you!</p>
+  </section>
+
+  <section class="team-section">
+    <div class="section-title"><h2>Meet Our Team</h2></div>
+    <div class="team-grid">
+
+      <div class="team-member">
+        <img src="{% static 'madhav.jpg' %}" alt="Madhav Taneja" class="member-img"/>
+        <div class="member-info">
+          <h3 class="member-name">Madhav Taneja</h3>
+          <p class="member-bio">Madhav is the creative mind behind BloggBuzz, managing the backend, content strategy, and seamless deployment of features.</p>
+          <div class="social-links">
+            <a href="#">🅾</a>
+            <a href="#">𝕏</a>
+            <a href="#">ℹ️</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="{% static 'divyansh.jpg' %}" alt="Divyansh Gaur" class="member-img"/>
+        <div class="member-info">
+          <h3 class="member-name">Divyansh Gaur</h3>
+          <p class="member-bio">Divyansh is a core developer focused on both front-end and back-end logic, ensuring a smooth user experience across the site.</p>
+          <div class="social-links">
+            <a href="#">🅾</a>
+            <a href="#">𝕏</a>
+            <a href="#">ℹ️</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="{% static 'manik.jpg' %}" alt="Manik Aggarwal" class="member-img"/>
+        <div class="member-info">
+          <h3 class="member-name">Manik Aggarwal</h3>
+          <p class="member-bio">Manik is a skilled developer contributing both front-end and backend features. His problem-solving and collaborative skills are essential to our growth.</p>
+          <div class="social-links">
+            <a href="#">🅾</a>
+            <a href="#">𝕏</a>
+            <a href="#">ℹ️</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="{% static 'aryan.jpg' %}" alt="Aryan" class="member-img"/>
+        <div class="member-info">
+          <h3 class="member-name">Aryan</h3>
+          <p class="member-bio">Aryan is a dedicated developer focused on building and refining features. His commitment to quality ensures smooth platform functionality.</p>
+          <div class="social-links">
+            <a href="#">🅾</a>
+            <a href="#">𝕏</a>
+            <a href="#">ℹ️</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
+{% endblock %}

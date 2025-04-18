@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #4a6fdc;
+        --secondary-color: #2c3e50;
+        --accent-color: #45aaf2;
+        --light-bg: #f8f9fa;
+        --dark-text: #333;
+        --light-text: #f8f9fa;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: var(--light-bg);
+        color: var(--dark-text);
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .hero {
+        color: black;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .hero h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .contact-section {
+        padding: 80px 0;
+    }
+
+    .contact-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: space-between;
+    }
+
+    .contact-info {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .contact-form {
+        flex: 2;
+        min-width: 300px;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: var(--secondary-color);
+        position: relative;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary-color);
+    }
+
+    .contact-info p {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .info-icon {
+        background-color: var(--primary-color);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: white;
+        font-size: 18px;
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .contact-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .contact-form textarea {
+        height: 150px;
+        resize: vertical;
+    }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 28px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #3a5cb9;
+    }
+
+    .social-links {
+        margin-top: 30px;
+    }
+
+    .social-links h3 {
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        background-color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .social-icon:hover {
+        background-color: var(--primary-color);
+    }
+
+    .faq-section {
+        background-color: white;
+        padding: 80px 0;
+    }
+
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+    }
+
+    .faq-question {
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: var(--secondary-color);
+    }
+
+    .faq-answer {
+        color: #666;
+    }
+
+    @media (max-width: 768px) {
+        .contact-flex {
+            flex-direction: column;
+        }
+    }
+
+    html, body {
+        background-image: url("{% static 'bg.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+</style>
+
+<div class="hero">
+    <div class="container">
+        <h2>📬Contact Us</h2>
+        <p>If you have any questions or feedback, feel free to reach out to us through the form below or connect with us on our social media!</p>
+    </div>
+</div>
+
+<div class="contact-section">
+    <div class="container">
+        <div class="contact-flex">
+            <div class="contact-info">
+                <h3 class="section-title">📍Contact Information</h3>
+                <p><span class="info-icon">📌</span>Chitkara University, Rajpura</p>
+                <p><span class="info-icon">📞</span>+9999999999</p>
+                <p><span class="info-icon">✉️</span>info@blogbuzz.com</p>
+                <div class="social-links">
+                    <h3>🔗 Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">🅾</a>
+                        <a href="#" class="social-icon">𝕏</a>
+                        <a href="#" class="social-icon">ℹ️</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3 class="section-title">📝Send Us a Message</h3>
+                <form action="{% url 'contact' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">📨Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="faq-section">
+    <div class="container faq-container">
+        <div class="faq-item">
+            <div class="faq-question">🤔What is Blogbuzz?</div>
+            <div class="faq-answer">Blogbuzz is a platform where people share their thoughts, ideas, and stories in the form of blogs. It's a community of bloggers and readers.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">✍️How do I submit a blog?</div>
+            <div class="faq-answer">To submit a blog, simply click on the 'Create Blog' button on the homepage and fill in the form with your blog content.</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

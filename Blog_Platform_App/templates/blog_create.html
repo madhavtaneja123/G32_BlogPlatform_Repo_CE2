@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        margin-top: 2rem;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+        padding: 14px 16px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s;
+        margin-bottom: 1.5rem;
+        background-color: #fff;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #4361ee;
+        box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+    }
+
+    .btn-primary {
+        background-color: #4361ee;
+        border: none;
+        padding: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #3a56d4;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #495057;
+        display: block;
+    }
+
+    .card-body {
+        padding: 2.5rem;
+    }
+
+    textarea.form-control {
+        min-height: 250px;
+        resize: vertical;
+    }
+
+    .header {
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    .header h1 {
+        color: #2b2d42;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    html,
+    body {
+        background-image: url("{% static 'bg.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    .full-width-container {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .full-width-container input {
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .full-width-container input {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="header">
+                        <h1>Create Blog</h1>
+                        <p class="text-muted">Share your knowledge with the world</p>
+
+                        {% if messages %}
+                          {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3" role="alert">
+                              {{ message }}
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="form-label">Your Name:</label>
+                            {{ form.author_name }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Your Email:</label>
+                            {{ form.author_email }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Blog Title:</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Category:</label>
+                                    {{ form.category }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Tags:</label>
+                                    {{ form.tags }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Content:</label>
+                            {{ form.content }}
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary w-100 py-3">
+                                <i class="bi bi-send-fill me-2"></i>Publish Blog
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

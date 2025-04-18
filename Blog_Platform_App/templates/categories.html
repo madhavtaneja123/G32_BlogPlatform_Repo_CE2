@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Browse by Category{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Browse Blogs by Category</h1>
+    <form method="get" action="{% url 'search_by_category' %}" class="mb-4">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-10">
+                <select name="category" class="form-select form-control">
+                    <option value="">-- Select Category --</option>
+                    {% for cat in category_choices %}
+                        <option value="{{ cat }}" {% if cat == query %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+        </div>
+    </form>
+
+<form method="get" action="{% url 'search_by_tag' %}" class="mb-4">
+    <div class="row g-2 align-items-center">
+        <div class="col-md-10">
+            <input type="text" name="tag" placeholder="Search by Tag" class="form-control" value="{{ tag_query|default:'' }}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-secondary w-100">Search Tag</button>
+        </div>
+    </div>
+</form>
+
+    {% if message %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+
+    <div class="row">
+        {% for blog in blogs %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">{{ blog.title }}</h3>
+                    <p class="card-text">{{ blog.content|truncatewords:30 }}</p>
+                    <span class="badge bg-secondary">{{ blog.category }}</span>
+                    <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-sm btn-outline-primary mt-2">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No blogs to show.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

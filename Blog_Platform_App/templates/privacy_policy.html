@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'logo1.png' %}">
+    <title>Privacy Policy</title>
+    <style>
+        body{
+            font-family:'Arial', sans-serif;
+            background-color:#f8f9fa;
+            margin:0;
+            padding:0;
+            background-image: url("{% static 'bg.jpg' %}");
+            background-size:cover;
+            background-position:center;
+        }
+
+        .navbar{
+            background-color:white !important;
+            padding:15px 20px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+        }
+
+        .navbar-brand img{
+            height:50px;
+            width:auto;
+        }
+
+        .navbar h1{
+    color:black;
+    font-size:30px;
+    font-weight:bold;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    white-space:nowrap;
+}
+
+        .navbar-nav{
+            margin-left:auto;
+        }
+
+        .navbar-nav .nav-link{
+            color:black !important;
+            font-size:18px;
+            transition:0.3s ease-in-out;
+            text-decoration:none;
+            padding:10px;
+        }
+
+        .navbar-nav .nav-link:hover{
+            color:#ffe600 !important;
+            transform:scale(1.05);
+        }
+
+        .container{
+            max-width:800px;
+            margin:20px auto;
+            padding:20px;
+            background:white;
+            border-radius:10px;
+            box-shadow:0 4px 8px rgba(0,0,0,0.1);
+            background-image: url("{% static 'bg.jpg' %}");
+        }
+
+        .section{
+            margin-bottom:15px;
+            width:85%;
+            margin:auto;
+        }
+
+        .section-header{
+            font-size:1.3rem;
+            font-weight:bold;
+            color:#0056b3;
+            cursor:pointer;
+            padding:10px;
+            background-color:#e9ecef;
+            border-radius:5px;
+            transition:all 0.3s ease;
+            text-align:center;
+        }
+
+        .section-header:hover{
+            background-color:#d6d8db;
+        }
+
+        .section-content{
+            display:none;
+            padding:10px;
+            border-left:4px solid #007bff;
+            margin-top:8px;
+            background-color:#f1f1f1;
+            border-radius:5px;
+            font-size:0.9rem;
+        }
+
+        .btn-back{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            width:fit-content;
+            margin:20px auto;
+            padding:10px 20px;
+            text-decoration:none;
+            color:#fff;
+            background-color:#007bff;
+            border-radius:5px;
+            transition:background-color 0.3s ease;
+        }
+
+        .btn-back:hover{
+            background-color:#0056b3;
+        }
+        .a{
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo1.png' %}" alt="Logo">
+        </a>
+        <h1 class="text-white">BlogBuzz</h1>
+        <div class="navbar-nav">
+            <a class="nav-link" href="{% url 'about' %}"><b>About Us</b></a>
+            <a class="nav-link" href="{% url 'contact' %}"><b>Contact Us</b></a>
+           <a class="nav-link" href="{% url 'categories' %}"><b>Category</b></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align:center;">BlogBuzz</h1>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('privacyInfo')">
+                Privacy Info
+            </div>
+            <div id="privacyInfo" class="section-content">
+                <p>1.<b>Data Collection:</b></p>
+                <ul>
+                    <li>We collect user information,including name,email and blog content, to provide a personalized experience.</li> 
+                    <li>Feedback and comments submitted are stored securely in our database.</li> 
+                </ul>
+                <p>2.<b>Data Usage:</b></p>
+                 <ul>
+                    <li>User data will only be used to display blogs, manage interactions and improve the platform.
+                    </li>
+                    <li>We do not share, sell, or distribute personal information to third parties.</li> 
+                </ul> 
+                <p>3.<b>Cookies and Tracking:</b></p> 
+                <ul> 
+                    <li>We may use cookies to enhance the user experience. Users can opt out of cookies in their browser settings.</li> 
+                </ul> 
+                <p>4. 
+                    <b>Security:</b>
+                </p> 
+                <ul> 
+                    <li>We implement security measures to protect user data. However, we cannot guarantee complete security against cyber threats.</li> 
+                </ul> 
+                <p>5. <b>User Rights:</b></p>
+                 <ul> 
+                    <li>Users can request the removal or modification of their data by contacting support.</li> 
+                </ul>
+            </div>
+        </div>
+<br>
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('termsConditions')">
+                Terms & Conditions
+            </div>
+            <div id="termsConditions" class="section-content">
+                <p>1 <b>User Conduct:</b></p> 
+                <ul> 
+                 <li>Users must ensure that all content(blogs,comments and feedback) is respectful and does not contain vulgar,offensive or harmful language.</li>   
+                 <li>Spamming, harassment, and inappropriate behavior are strictly prohibited.</li>
+                 </ul> <p>2.<b>Content Ownership:</b></p> <ul> 
+                    <li>Users retain ownership of their blogs and comments but grant us the right to display and distribute their content on our platform.</li> 
+                </ul>
+                 <p>3. <b>Prohibited Content:</b></p> 
+                 <ul> 
+                    <li>Any content containing vulgar language, hate speech, discrimination, or illegal activities is strictly prohibited.</li> <li>Users posting inappropriate content may be banned from the platform.</li> 
+                </ul> 
+                <p>4. <b>Account Termination:</b></p> 
+                <ul> 
+                    <li>We reserve the right to remove any user-generated content or terminate accounts violating these terms.</li>
+                 </ul> 
+                 <p>5. <b>Liability:</b></p>
+                  <ul>
+                     <li>We are not responsible for any content posted by users. All blogs and comments reflect the opinions of their respective authors.</li> </ul>
+            </div>
+        </div>
+<br>
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('editorialPolicies')">
+                Editorial Policies
+            </div>
+            <div id="editorialPolicies" class="section-content">
+                <p>1.<b>Content Guidelines:</b></p>
+                <ul><li>Blogs must be original, informative, and respectful.</li> <li>Plagiarism or copyright infringement is not allowed.</li>
+            </ul> <p>2.<b>Moderation:</b></p> 
+            <ul> 
+                <li>All blogs and comments will be monitored and any content deemed inappropriate(vulgar, offensive, or misleading) will be removed.</li> <li>Users found repeatedly violating the policies may face permanent account suspension.</li>
+             </ul> 
+             <p>3.<b>Quality Standards:</b> </p> <ul>
+             <li>Blogs should maintain a professional tone and adhere to ethical writing practices.</li>
+                <li>Any blog or comment that spreads false information or promotes violence will be rejected.</li>
+             </ul> <p>4.<b>User Responsibility:</b></p> 
+             <ul> 
+                <li>Users are responsible for the accuracy of their blog content.</li> <li>We encourage constructive discussions while maintaining a respectful community.</li> 
+            </ul>
+            </div>
+        </div>
+<br>
+        <a href="{% url 'contact' %}" class="btn-back">Back</a>
+    </div>
+
+    <script>
+        function toggleSection(sectionId){
+            const content=document.getElementById(sectionId);
+            content.style.display=content.style.display==="block"?"none":"block";
+        }
+    </script>
+</body>
+</html>

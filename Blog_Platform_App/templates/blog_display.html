@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Blog Posts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .like-btn{
+            border: none;
+            background: none;
+            color: #6c757d;
+            transition: all 0.3s;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .like-btn:hover,
+        .like-btn.liked {
+            color:#dc3545;
+        }
+
+        .reading-time {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .card {
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #495057;
+        }
+
+        .author-info span {
+            font-size: 0.9rem;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>All Blog Posts</h1>
+            <div>
+                <a href="{% url 'blog_create' %}" class="btn btn-primary">Create New Blog</a>
+                <a href="{% url 'categories' %}" class="btn btn-info">Browse Categories</a>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            {% for blog in blogs %}
+            <div class="card mb-4 shadow-sm">
+                {% if user.is_authenticated and blog.author_name == user.username %}
+                    <button class="delete-btn btn btn-danger btn-sm" data-blog-id="{{ blog.id }}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                {% elif user.is_authenticated and user.is_superuser %}
+                    <button class="delete-btn btn btn-danger btn-sm" data-blog-id="{{ blog.id }}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                {% endif %}
+
+                <div class="card-body">
+                    <h2 class="card-title">{{ blog.title }}</h2>
+                    <div class="author-info mb-3">
+                        <span class="text-primary">{{ blog.author_name }}</span>
+                        <span class="text-muted ms-2">{{ blog.author_email }}</span>
+                    </div>
+
+                    <p class="full-content d-none">{{ blog.content }}</p>
+                    <p class="card-text">{{ blog.content|truncatewords:50 }}</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div>
+                            <button class="like-btn" data-blog-id="{{ blog.id }}" id="like-btn-{{ blog.id }}">
+                                <i class="bi bi-heart"></i>
+                                <span class="like-count" id="like-count-{{ blog.id }}">{{ blog.likes }}</span>
+                            </button>
+                            <span class="ms-3 reading-time">Calculating...</span>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="{% url 'blog_detail' blog.id %}" class="btn btn-sm btn-outline-primary">Read More</a>
+
+                            {% if blog.id in bookmarks %}
+                            <a href="{% url 'remove_bookmark' blog.id %}" class="btn btn-sm btn-outline-danger" title="Remove Bookmark">
+                                <i class="bi bi-bookmark-x"></i>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'add_bookmark' blog.id %}" class="btn btn-sm btn-outline-success" title="Add Bookmark">
+                                <i class="bi bi-bookmark-plus"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if user.is_authenticated %}
+                                {% if blog.author_name == user.username or user.is_superuser %}
+                                    <a href="{% url 'blog_edit' blog.id %}" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <small class="text-muted d-block mt-2">{{ blog.created_at|date:"F j, Y" }}</small>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">No blogs yet. <a href="{% url 'blog_create' %}">Create the first one!</a></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function getCSRFToken() {
+            let cookieValue = null;
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith('csrftoken=')) {
+                    cookieValue = cookie.substring('csrftoken='.length, cookie.length);
+                    break;
+                }
+            }
+            return cookieValue;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            function calculateReadingTime(content) {
+                const wordCount = content.trim().split(/\s+/).length;
+                return Math.max(1, Math.ceil(wordCount / 200));
+            }
+
+            document.querySelectorAll('.card').forEach(card => {
+                const fullContent = card.querySelector('.full-content');
+                const readingTimeSpan = card.querySelector('.reading-time');
+
+                if (fullContent && readingTimeSpan) {
+                    const content = fullContent.textContent || '';
+                    const readingTime = calculateReadingTime(content);
+                    readingTimeSpan.textContent = `${readingTime} min read`;
+                }
+            });
+
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const blogId = this.getAttribute('data-blog-id');
+                    if (confirm('Are you sure you want to delete this blog post?')) {
+                        fetch(`/blog/${blogId}/delete/`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCSRFToken()
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                this.closest('.card').remove();
+                            } else {
+                                alert("Failed to delete blog.");
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    }
+                });
+            });
+
+            document.querySelectorAll('.like-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const blogId = this.getAttribute('data-blog-id');
+                    const likeCount = document.getElementById(`like-count-${blogId}`);
+                    const isLiked = this.classList.contains('liked');
+
+                    fetch(`/blog/${blogId}/like/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCSRFToken()
+                        },
+                        body: JSON.stringify({
+                            action: isLiked ? 'unlike' : 'like'
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.classList.toggle('liked');
+                            likeCount.textContent = data.like_count;
+
+                            const icon = this.querySelector('i');
+                            icon.classList.toggle('bi-heart');
+                            icon.classList.toggle('bi-heart-fill');
+                        } else {
+                            alert("Like action failed.");
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
+{% endblock %}
