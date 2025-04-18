@@ -15,6 +15,12 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['image', 'phone_no', 'bio', 'linkedin', 'instagram', 'facebook']
 
+    def clean_phone_no(self):
+        phone = self.cleaned_data.get('phone_no')
+        if not phone.isdigit() or len(phone) != 10:
+            raise forms.ValidationError("Phone number must be exactly 10 digits.")
+        return phone
+
     def clean_linkedin(self):
         linkedin = self.cleaned_data.get('linkedin')
         return linkedin or None
@@ -63,3 +69,10 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
         fields = ['first_name', 'last_name', 'email', 'rating', 'feedback_message']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
+            'feedback_message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }

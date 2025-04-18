@@ -142,7 +142,7 @@
                 </div>
             {% else %}
                 <a class="navbar-brand" href="{% url 'index' %}">
-                    <strong>MyBlog</strong>
+                    <strong>BlogBuzz</strong>
                 </a>
             {% endif %}
         </div>
@@ -165,6 +165,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog_display' %}">Display</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
@@ -190,7 +193,7 @@
     <p>&copy; 2025 BlogBuzz. All rights reserved.</p>
     <ul class="footer-links">
         <li><a href="{% url 'privacy_policy' %}">Privacy Info</a></li>
-        <li><a href="{% url 'privacy_policy' %}">Terms</a></li>
+        <li><a href="{% url 'privacy_policy' %}">Terms&Conditions</a></li>
         <li><a href="{% url 'privacy_policy' %}">Policies</a></li>
     </ul>
 </footer>

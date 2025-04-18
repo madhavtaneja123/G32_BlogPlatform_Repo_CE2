@@ -59,6 +59,7 @@ def edit_profile(request):
         form = ProfileUpdateForm(instance=request.user.profile)
     return render(request, 'edit_profile.html', {'form': form})
 
+@login_required
 def blog_display(request):
     blogs = Blog.objects.all().order_by('-created_at')
     return render(request, 'blog_display.html', {'blogs': blogs})
@@ -85,6 +86,7 @@ def blog_create(request):
         })
     return render(request, 'blog_create.html', {'form': form})
 
+@login_required
 def blog_detail(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
     if request.method == 'POST':
@@ -108,7 +110,7 @@ def blog_detail(request, blog_id):
         'comment_form': comment_form
     })
 
-
+@login_required
 def search_by_category(request):
     query = request.GET.get('category', '')
     blogs = Blog.objects.filter(category__icontains=query).order_by('-created_at') if query else []
@@ -121,6 +123,7 @@ def search_by_category(request):
         'category_choices': [choice[0] for choice in Blog.CATEGORY_CHOICES],  
     })
 
+@login_required
 def search_by_tag(request):
     tag_query = request.GET.get('tag', '')
     blogs = Blog.objects.filter(tags__icontains=tag_query).order_by('-created_at') if tag_query else []
@@ -203,6 +206,7 @@ def index_view(request):
 def feedback_thanks(request):
     return render(request, 'feedback_thanks.html')
 
+@login_required
 def feedback_view(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
@@ -210,9 +214,13 @@ def feedback_view(request):
             form.save()
             return redirect('feedback_thanks')
     else:
-        form = FeedbackForm()
+        form = FeedbackForm(initial={
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'email': request.user.email,
+        })
     
-    return render(request, 'feedback.html',{'form':form})
+    return render(request, 'feedback.html', {'form': form})
 
 @csrf_exempt
 def contact_view(request):
